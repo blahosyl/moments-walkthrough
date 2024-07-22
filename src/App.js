@@ -18,6 +18,7 @@ function App() {
     try {
       const { data } = await axios.get("dj-rest-auth/user/");
       setCurrentUser(data);
+      console.log(data);
     } catch (err) {
       console.log(err);
     }
