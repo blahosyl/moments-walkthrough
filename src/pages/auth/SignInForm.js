@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios"
 
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
@@ -14,35 +15,28 @@ import styles from "../../styles/SignInUpForm.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import appStyles from "../../App.module.css";
 
-import axios from "axios";
-
-
 function SignInForm() {
-    const [signInData, setSignInData] = useState({
-        username: "",
-        password: "",
-      });
-    const { username, password } = signInData;
+  const [signInData, setSignInData] = useState({
+    username: "",
+    password: "",
+  });
+  const { username, password } = signInData;
 
-    const history = useHistory();
-
-    const handleChange = (event) => {
-        setSignInData({
-          ...signInData,
-          [event.target.name]: event.target.value,
-        });
-    };
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        try {
-          await axios.post("/dj-rest-auth/login/", signInData);
-          history.push("/");
-        } catch (err) {
-        }
-    };
-
-
+  const history = useHistory();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      await axios.post("/dj-rest-auth/login/", signInData);
+      history.push("/");
+    } catch (err) {
+    }
+  };
+  const handleChange = (event) => {
+    setSignInData({
+      ...signInData,
+      [event.target.name]: event.target.value,
+    });
+  };
   return (
     <Row className={styles.Row}>
       <Col className="my-auto p-0 p-md-2" md={6}>
