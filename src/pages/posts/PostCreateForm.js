@@ -14,16 +14,34 @@ import btnStyles from "../../styles/Button.module.css";
 import Asset from "../../components/Asset";
 
 function PostCreateForm() {
+
   const [errors, setErrors] = useState({});
+
+  const [postData, setPostData] = useState({
+    title: "",
+    content: "",
+    image: "",
+  });
+
+  const { title, content, image } = postData;
+
+  const handleChange = (event) => {
+    setPostData({
+      ...postData,
+      [event.target.name]: event.target.value,
+    });
+  };
 
   const textFields = (
     <div className="text-center">
       <Form.Group>
         <Form.Label>Title</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Title"
-          name="title"
+        <Form.Control 
+            type="text" 
+            placeholder="Title" 
+            name="title"
+            value={title}
+            onChange={handleChange}
         />
       </Form.Group>
 
@@ -34,6 +52,8 @@ function PostCreateForm() {
           rows="6"
           placeholder="Content"
           name="content"
+          value={content}
+          onChange={handleChange}
         />
       </Form.Group>
 
