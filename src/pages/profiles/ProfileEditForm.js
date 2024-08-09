@@ -33,14 +33,19 @@ const ProfileEditForm = () => {
   const { name, content, image } = profileData;
 
   const [errors, setErrors] = useState({});
+  const [isMounted, setIsMounted] = useState(true);
 
   useEffect(() => {
+
+    // Set isMounted to true when the component mounts
+    setIsMounted(true);
+
     const handleMount = async () => {
       if (currentUser?.profile_id?.toString() === id) {
         try {
           const { data } = await axiosReq.get(`/profiles/${id}/`);
           const { name, content, image } = data;
-          setProfileData({ name, content, image });
+          if (isMounted) {setProfileData({ name, content, image })};
         } catch (err) {
           console.log(err);
           history.push("/");
@@ -51,7 +56,12 @@ const ProfileEditForm = () => {
     };
 
     handleMount();
-  }, [currentUser, history, id]);
+
+    // Cleanup function to set isMounted to false when the component unmounts
+    return () => {
+      setIsMounted(false);
+    };
+  }, [currentUser, history, id, isMounted]);
 
   const handleChange = (event) => {
     setProfileData({
